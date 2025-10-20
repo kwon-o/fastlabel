@@ -10,6 +10,7 @@ def load_image(file_path):
     img_read = cv2.imread(file_path)
     if img_read is None:
         raise Exception("Please check the image file.")
+    print(f'1. Image file {file_path} uploaded successfully.')
     return img_read
 
 def preprocess_table(img):
@@ -79,6 +80,7 @@ def preprocess_table(img):
     else:
         final = cv2.rotate(warped_gray, cv2.ROTATE_180)
 
+    print('2. Image preprocessing completed.')
     return final
 
 
@@ -99,6 +101,7 @@ def post_process_currency(text_data_list):
 
 def recognize_and_grid(rotated_gray_img):
     # 1. Optical Character Recognition
+    print('3. Starting text recognition from the image. This may take some time.')
     reader = easyocr.Reader(['ja', 'en'])
     results = reader.readtext(rotated_gray_img, detail=1)
 
@@ -166,6 +169,7 @@ def recognize_and_grid(rotated_gray_img):
 
     df = pd.DataFrame(data)
 
+    print('4. Text recognition completed.')
     return df
 
 
@@ -175,6 +179,7 @@ def main(input_image, output_csv):
         table_img = preprocess_table(load_img)
         result_df = recognize_and_grid(table_img)
         result_df.to_csv(output_csv, index=False, header=False, encoding='utf-8-sig')
+        print(f'5. Results have been saved as {output_csv}.')
         print(result_df.to_string(index=False, header=False))
     except Exception as e:
         print(f"[ERROR] {e}")
@@ -192,3 +197,4 @@ if __name__ == "__main__":
         exit(1)
 
     main(args.input, args.output)
+
