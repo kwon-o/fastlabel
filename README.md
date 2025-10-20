@@ -13,6 +13,18 @@ git clone https://github.com/kwon-o/fastlabel.git
 cd fastlabel
 ```
 
+※ 仮想環境設定 (Option)
+```bash
+# 仮想環境作成
+python -m venv .venv
+
+# 仮想環境実行 (Linux)
+source .venv/bin/activate
+
+# 仮想環境実行 (Windwos)
+.venv\Scripts\activate.bat
+```
+
 2. 必要なPythonライブラリをインストールします。
 ```bash
 pip install -r requirements.txt
